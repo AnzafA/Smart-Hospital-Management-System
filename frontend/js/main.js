@@ -1,6 +1,6 @@
 // API Configuration
 // Use relative path for Vercel deployment, fallback to localhost for development
-const API_URL = window.location.hostname === 'localhost' 
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:')
     ? 'http://localhost:5000/api'
     : '/_/backend/api';
 let authToken = localStorage.getItem('token');
@@ -93,6 +93,8 @@ async function handleLogin(e) {
     loginBtn.disabled = true;
     
     try {
+        console.log('Login attempt:', { username, apiUrl: API_URL });
+        
         const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -100,6 +102,7 @@ async function handleLogin(e) {
         });
         
         const data = await response.json();
+        console.log('Login response:', { status: response.status, data });
         
         if (response.ok) {
             localStorage.setItem('token', data.token);
@@ -118,8 +121,15 @@ async function handleLogin(e) {
             loginBtn.disabled = false;
         }
     } catch (error) {
-        console.error('Login error:', error);
-        Toast.show('Network error. Please try again.', 'error');
+        console.error('Login error details:', error);
+        console.error('API URL was:', API_URL);
+        
+        let errorMessage = 'Network error. Please make sure the backend server is running on port 5000.';
+        if (error.message.includes('fetch')) {
+            errorMessage = 'Failed to connect to server. Is the backend running?';
+        }
+        
+        Toast.show(errorMessage, 'error');
         loginBtn.innerHTML = '<span>Login</span> <i class="fas fa-arrow-right"></i>';
         loginBtn.disabled = false;
     }
@@ -134,12 +144,15 @@ async function initializeDatabase() {
     setupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing...';
     
     try {
+        console.log('Initializing database with API URL:', API_URL);
+        
         const response = await fetch(`${API_URL}/auth/initialize`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
         
         const data = await response.json();
+        console.log('Initialize response:', { status: response.status, data });
         
         if (response.ok) {
             Toast.show('Database initialized successfully! Admin user created.', 'success');
@@ -152,6 +165,7 @@ async function initializeDatabase() {
         }
     } catch (error) {
         console.error('Initialization error:', error);
+        console.error('API URL was:', API_URL);
         Toast.show('Failed to connect to backend. Make sure the server is running.', 'error');
         setupBtn.innerHTML = '<i class="fas fa-cog"></i> Initialize Database';
         setupBtn.disabled = false;
