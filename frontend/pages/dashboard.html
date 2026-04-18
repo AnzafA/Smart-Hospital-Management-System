@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Hospital - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <i class="fas fa-hospital-alt"></i>
+                <span>City Hospital</span>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-page="patients">
+                    <i class="fas fa-users"></i>
+                    <span>Patients</span>
+                </div>
+                <div class="nav-item" data-page="doctors">
+                    <i class="fas fa-user-md"></i>
+                    <span>Doctors</span>
+                </div>
+                <div class="nav-item" data-page="appointments">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </div>
+                <div class="nav-item" data-page="billing">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Billing</span>
+                </div>
+                <div class="nav-item" data-page="medicines">
+                    <i class="fas fa-pills"></i>
+                    <span>Medicines</span>
+                </div>
+                <div class="nav-item" data-page="staff">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Staff</span>
+                </div>
+                <div class="nav-item" data-page="daily-codes">
+                    <i class="fas fa-key"></i>
+                    <span>Daily Codes</span>
+                </div>
+            </div>
+            
+            <div class="user-profile" id="logoutBtn">
+                <i class="fas fa-user-circle"></i>
+                <div>
+                    <div class="profile-name" id="profileName">Admin User</div>
+                    <div class="profile-role" id="profileRole">Administrator</div>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </nav>
+        
+        <main class="dashboard-main">
+            <!-- Content will be loaded dynamically -->
+        </main>
+    </div>
+    
+    <script src="../js/main.js"></script>
+</body>
+</html>
