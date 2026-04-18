@@ -125,6 +125,39 @@ async function handleLogin(e) {
     }
 }
 
+// Initialize Database - Create default admin user
+async function initializeDatabase() {
+    const setupBtn = document.querySelector('.setup-btn');
+    if (!setupBtn) return;
+    
+    setupBtn.disabled = true;
+    setupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing...';
+    
+    try {
+        const response = await fetch(`${API_URL}/auth/initialize`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            Toast.show('Database initialized successfully! Admin user created.', 'success');
+            setupBtn.innerHTML = '<i class="fas fa-check"></i> Database Ready';
+            setupBtn.style.backgroundColor = '#28a745';
+        } else {
+            Toast.show(data.message || 'Initialization failed', 'warning');
+            setupBtn.innerHTML = '<i class="fas fa-cog"></i> Initialize Database';
+            setupBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Initialization error:', error);
+        Toast.show('Failed to connect to backend. Make sure the server is running.', 'error');
+        setupBtn.innerHTML = '<i class="fas fa-cog"></i> Initialize Database';
+        setupBtn.disabled = false;
+    }
+}
+
 // Initialize Dashboard
 function initializeDashboard() {
     loadUserProfile();

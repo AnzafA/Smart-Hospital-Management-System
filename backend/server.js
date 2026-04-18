@@ -364,6 +364,35 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
+// Initialize Database Endpoint - creates default admin if none exists
+app.post('/api/auth/initialize', async (req, res) => {
+    try {
+        const adminExists = await User.findOne({ role: 'admin' });
+        if (adminExists) {
+            return res.json({ message: 'Admin user already exists', user: { username: adminExists.username, email: adminExists.email } });
+        }
+
+        const adminUser = new User({
+            username: 'admin',
+            email: 'admin@hospital.com',
+            password: 'Admin@123',
+            role: 'admin'
+        });
+        await adminUser.save();
+        
+        res.json({ 
+            message: 'Admin user created successfully',
+            credentials: {
+                username: 'admin',
+                password: 'Admin@123',
+                email: 'admin@hospital.com'
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error initializing database', error: error.message });
+    }
+});
+
 // Patient Routes
 app.get('/api/patients', authenticateToken, async (req, res) => {
     try {
