@@ -1,21 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "cd backend && npm install",
-  "functions": {
-    "backend/server.js": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
-    }
+  "framework": null,
+  "installCommand": "cd backend && npm install",
+  "outputDirectory": "frontend",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" }
   ],
   "env": {
     "MONGODB_URI": "@mongodb_uri",
