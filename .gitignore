@@ -51,6 +51,9 @@ jspm_packages/
 *.swp
 *.swo
 
+# Old frontend directory (renamed to public/)
+frontend/
+
 # OS generated files
 .DS_Store
 .DS_Store?
