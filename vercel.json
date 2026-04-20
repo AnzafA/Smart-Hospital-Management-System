@@ -3,9 +3,5 @@
   "installCommand": "cd backend && npm install",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" }
-  ],
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "JWT_SECRET": "@jwt_secret"
-  }
+  ]
 }
